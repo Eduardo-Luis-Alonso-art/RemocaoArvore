@@ -1,35 +1,61 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         ArvoreBinaria arvore = new ArvoreBinaria();
-        arvore.inserir(50);
-        arvore.inserir(30);
-        arvore.inserir(70);
-        arvore.inserir(20);
-        arvore.inserir(40);
-        arvore.inserir(60);
-        arvore.inserir(80);
+        Scanner scanner = new Scanner(System.in);
+        int opcao = 0;
 
-        System.out.println("Árvore em pré-ordem, em-ordem e pós-ordem:");
-        arvore.preOrdem();
-        arvore.emOrdem();
-        arvore.posOrdem();
+        while (opcao != 3) {
+            System.out.println("=========================");
+            System.out.println("==        Menu:        ==");
+            System.out.println("== 1 - Inserir valores ==");
+            System.out.println("== 2 - Remover valor   ==");
+            System.out.println("== 3 - Finalizar       ==");
+            System.out.println("=========================");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
 
-        System.out.println("Remover 20 (folha)");
-        arvore.remover(20);
-        arvore.preOrdem();
-        arvore.emOrdem();
-        arvore.posOrdem();
+            switch (opcao) {
+                case 1:
+                    System.out.print("Quantos valores deseja inserir?: ");
+                    int quantidade = scanner.nextInt();
 
-        System.out.println("Remover 30 (nó com um filho)");
-        arvore.remover(30);
-        arvore.preOrdem();
-        arvore.emOrdem();
-        arvore.posOrdem();
+                    for (int i = 0; i < quantidade; i++) {
+                        System.out.print("Digite o valor " + (i + 1) + ": ");
+                        int valorInserir = scanner.nextInt();
+                        arvore.inserir(valorInserir);
+                    }
+                    System.out.println("Valores inseridos");
+                    break;
 
-        System.out.println("Remover 50 (nó com dois filhos - raiz)");
-        arvore.remover(50);
-        arvore.preOrdem();
-        arvore.emOrdem();
-        arvore.posOrdem();
+                case 2:
+                    System.out.print("Digite o valor para remover: ");
+                    int valorRemover = scanner.nextInt();
+                    boolean removido = arvore.remover(valorRemover);
+                    if (removido) {
+                        System.out.println("Valor removido da árvore");
+                    } else {
+                        System.out.println("Valor não encontrado na árvore");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("Finalizando...");
+                    break;
+
+                default:
+                    System.out.println("Essa opção não existe");
+            }
+
+            if (opcao != 3) {
+                System.out.println("\nÁrvore em pré-ordem:");
+                arvore.preOrdem();
+                System.out.println("Árvore em em-ordem:");
+                arvore.emOrdem();
+                System.out.println("Árvore em pós-ordem:");
+                arvore.posOrdem();
+            }
+        }
     }
 }

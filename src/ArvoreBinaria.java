@@ -19,8 +19,12 @@ public class ArvoreBinaria {
         return atual;
     }
 
-    public void remover(int valor) {
+    public boolean remover(int valor) {
+        if (!buscar(valor)) {
+            return false;
+        }
         raiz = removerRecursivo(raiz, valor);
+        return true;
     }
 
     private No removerRecursivo(No atual, int valor) {
@@ -35,13 +39,11 @@ public class ArvoreBinaria {
         } else {
             if (atual.esquerdo == null && atual.direito == null) {
                 return null;
-            }
-            else if (atual.esquerdo == null) {
+            } else if (atual.esquerdo == null) {
                 return atual.direito;
             } else if (atual.direito == null) {
                 return atual.esquerdo;
-            }
-            else {
+            } else {
                 int menorValor = encontrarMenorValor(atual.direito);
                 atual.valor = menorValor;
                 atual.direito = removerRecursivo(atual.direito, menorValor);
@@ -58,6 +60,24 @@ public class ArvoreBinaria {
             no = no.esquerdo;
         }
         return menor;
+    }
+
+    public boolean buscar(int valor) {
+        return buscarRecursivo(raiz, valor);
+    }
+
+    private boolean buscarRecursivo(No atual, int valor) {
+        if (atual == null) {
+            return false;
+        }
+
+        if (valor == atual.valor) {
+            return true;
+        }
+
+        return valor < atual.valor
+                ? buscarRecursivo(atual.esquerdo, valor)
+                : buscarRecursivo(atual.direito, valor);
     }
 
     public void preOrdem() {
